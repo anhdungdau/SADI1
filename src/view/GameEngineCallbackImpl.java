@@ -1,34 +1,22 @@
-package model;
+package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Locale;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.interfaces.DicePair;
 import model.interfaces.GameEngine;
 import model.interfaces.GameEngineCallback;
 import model.interfaces.Player;
 
-/**
- *
- * Skeleton example implementation of GameEngineCallback showing Java logging behaviour
- *
- * @author Caspar Ryan
- * @see model.interfaces.GameEngineCallback
- *
- */
-
 public class GameEngineCallbackImpl implements GameEngineCallback
 {
 	private Logger logger;
 	private int total;
-	private ArrayList<Integer> al = new ArrayList(); 
-	
-	// log final points balances so we can check correctness
-	// for (Player player : GameEngineImpl.getAllPlayers())
-	// logger.log(Level.INFO, player.toString());
+	private ArrayList<Integer> al = new ArrayList();
 
 	public int getTotal() {
 		return total;
@@ -41,22 +29,19 @@ public class GameEngineCallbackImpl implements GameEngineCallback
 	public GameEngineCallbackImpl() {
 		logger = Logger.getLogger(GameEngineCallback.class.getName());
 		logger.setLevel(Level.FINE);
-		FileHandler filehandler = null;
-		try {
-			filehandler = new FileHandler("Output.log");
-			filehandler.setLevel(Level.FINE);
-			logger.addHandler(filehandler);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		filehandler.setFormatter(new SimpleFormatter());
+//		FileHandler filehandler = null;
+//		try {
+//			filehandler = new FileHandler("Output.log");
+//			filehandler.setLevel(Level.FINE);
+//			logger.addHandler(filehandler);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		filehandler.setFormatter(new SimpleFormatter());
 	}
 
 	//called as the dice are rolling for a Player, use this to update your display or log to console
 	public void intermediateResult(Player player, DicePair dicePair, GameEngine gameEngine) {
-		// intermediate results logged at Level.FINE
-		//logger.log(Level.INFO, "Intermediate data to log .. String.format() is good here!");
-		// TO DO: complete this method to log results
 		int total = dicePair.getDice1() + dicePair.getDice2();
 		displayRoll(player.getPlayerName(), dicePair, total);
 	}
@@ -74,11 +59,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback
 	}
 
 	//called when HOUSE dice have stopped rolling with the final resting dice values
-	// PRE-CONDITION: This method should only be called after bets have been updated on all Players
-	// 				  so this callback can log Player results
 	public void houseResult(DicePair result, GameEngine gameEngine) {
-		// TO DO: complete the GameEngineCallback interface implementation
-
 		total = result.getDice1() + result.getDice2();
 		displayFinalRoll("House", result, total);
 

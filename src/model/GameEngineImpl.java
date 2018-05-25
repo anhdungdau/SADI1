@@ -4,6 +4,8 @@ import model.interfaces.DicePair;
 import model.interfaces.GameEngine;
 import model.interfaces.GameEngineCallback;
 import model.interfaces.Player;
+import view.GameEngineCallbackImpl;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -29,10 +31,6 @@ public class GameEngineImpl implements GameEngine {
     }
 
     //Roll the dice progressing from the initialDelay to the finalDelay in increments of delayIncrement, delays are in milliseconds (ms)
-    //1. Start at initialDelay then increment the delay each time a new number is shown on the die faces
-    //2. Call GameEngineCallback.intermediateResult(...) or intermediateHouseResult(...) each time a pair of new dice faces are shown until delay greater than or equal to finalDelay
-    //3. Call GameEngineCallback.result(...) or houseResult(...) with final result for player or house
-    //4. Make sure you update the player with final result so it can be retreived later
     public void rollPlayer(Player player, int initialDelay, int finalDelay, int delayIncrement) {
         DicePair dicePair = null;
         for (int delay = initialDelay; delay < finalDelay; delay += delayIncrement) {
@@ -49,9 +47,6 @@ public class GameEngineImpl implements GameEngine {
     }
 
     //Same as rollPlayer() but rolls for the house and calls the house versions of the callback methods on GameEngineCallback,
-    // no player parameter is required.
-    // All bets are settled at the end of this method i.e. this method goes through all players and applies win or loss to update betting points
-    // (this functionality should be implemented in a separate private method in GameEngineImpl)
     public void rollHouse(int initialDelay, int finalDelay, int delayIncrement) {
         DicePair dicePair = null;
         for (int delay = initialDelay; delay < finalDelay; delay += delayIncrement) {
